@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using Assets.scripts;
+
 
 public class BallCatcher : MonoBehaviour
 {
     public int speed;
-    public Vector2 direction;
     public Ball ball;
 
+    private Vector2 direction;
+
     void Awake() {
-        direction.Scale(new Vector2(speed, speed));
+        
     }
 
     void OnMouseDown() {
-        Debug.Log("md1");
-        if (ball != null) {
-            Debug.Log("md2");
+        if (ball != null && enabled) {
             ball.gameObject.GetComponent<CircleCollider2D>().enabled = true;
+            Debug.Log(direction.ToString());
             ball.Fire(direction);
             ball.transform.SetParent(null);
             ball = null;
@@ -34,5 +37,16 @@ public class BallCatcher : MonoBehaviour
 
     public Ball GetBall() {
         return ball;
+    }
+
+    public void SetDirection(Vector2 vector2)
+    {
+        direction = vector2;
+        direction.Scale(new Vector2(speed, speed));
+    }
+
+    public void SetEnabled(bool enabled)
+    {
+        this.enabled = enabled;
     }
 }

@@ -13,7 +13,7 @@ public class Ball : MonoBehaviour {
 	
 	void Update () {
 	    if (speed != Vector2.zero) {
-            transform.Translate(speed.x * Time.deltaTime, speed.y * Time.deltaTime, 0);    
+            transform.position = new Vector3(transform.position.x + speed.x * Time.deltaTime, transform.position.y + speed.y * Time.deltaTime, 0);    
 	    } 
 	}
 
@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour {
         matRenderer.material.color = color;
     }
 
-    public void Fire(Vector2 direction) {
+    public void Fire(Vector2 direction) { 
         speed = direction;
         escapingCatcher = true;
     }
@@ -44,20 +44,17 @@ public class Ball : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag != "ballcatcher") {
-            Debug.Log("collided with other than catcher: " + coll.gameObject.tag);
             return;
         }
 
         BallCatcher ballCatcher = coll.gameObject.GetComponent<BallCatcher>();
 
         if (ballCatcher.IsFree()  && !escapingCatcher) {
-            Debug.Log("ball catcher was null");
             transform.position = coll.gameObject.transform.position;
 
             ballCatcher.SetBall(GetComponent<Ball>());
             Stop();
         } else if(!escapingCatcher) {
-            Debug.Log("inverting");
             InvertDirection();
         }
     }

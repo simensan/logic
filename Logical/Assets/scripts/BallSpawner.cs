@@ -6,10 +6,10 @@ public class BallSpawner : MonoBehaviour {
 
     public int timeBetweenSpawnsInSeconds = 2;
     public Vector2 direction = new Vector2();
-    public int speed = 500;
-    private List<Color> colors = new List<Color>();
+    public int speed = 10;
+    private readonly List<Color> colors = new List<Color>();
 
-    private float counter = 0f;
+    private float counter = Mathf.Infinity;
 
     // Use this for initialization
 	void Start () {
